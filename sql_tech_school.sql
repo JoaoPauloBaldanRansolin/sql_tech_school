@@ -54,57 +54,56 @@ INSERT INTO matriculas (aluno_id, curso_id, data_matricula) VALUES
 (3, 3, '2026-08-12'), 
 (5, 1, '2026-08-12');
 
--- SELECT 
---     a.nome AS nome_aluno, 
---     c.nome_curso
--- FROM matriculas m
--- JOIN alunos a ON m.aluno_id = a.id
--- JOIN cursos c ON m.curso_id = c.id;
+ SELECT 
+     a.nome AS nome_aluno, 
+     c.nome_curso
+    FROM matriculas m 
+    JOIN alunos a ON m.aluno_id = a.id
+    JOIN cursos c ON m.curso_id = c.id;
 
 
 
 
--- SELECT 
---     a.nome AS nome_aluno, 
---     c.nome_curso
--- FROM alunos a
--- LEFT JOIN matriculas m ON a.id = m.aluno_id
--- LEFT JOIN cursos c ON m.curso_id = c.id;
+   SELECT 
+       a.nome AS nome_aluno, 
+       c.nome_curso
+   FROM alunos a
+   LEFT JOIN matriculas m ON a.id = m.aluno_id
+   LEFT JOIN cursos c ON m.curso_id = c.id;
 
 
 
--- CREATE OR REPLACE FUNCTION fn_auditar_preco_curso()
--- RETURNS TRIGGER AS $$
--- BEGIN
---     IF OLD.valor <> NEW.valor THEN
---         INSERT INTO log_precos (curso_id, valor_antigo, valor_novo, data_alteracao)
---         VALUES (NEW.id, OLD.valor, NEW.valor, NOW());
---     END IF;
---     RETURN NEW;
--- END;
--- $$ LANGUAGE plpgsql;
-
-
-
-
--- CREATE TRIGGER trg_auditoria_preco_curso
--- AFTER UPDATE ON cursos
--- FOR EACH ROW
--- EXECUTE PROCEDURE fn_auditar_preco_curso();
-
--- UPDATE cursos SET valor = 1950.00 WHERE id = 2;
-
--- SELECT * FROM precos;
+   CREATE OR REPLACE FUNCTION fn_auditar_preco_curso()
+   RETURNS TRIGGER AS $$
+   BEGIN
+       IF OLD.valor <> NEW.valor THEN
+         INSERT INTO log_precos (curso_id, valor_antigo, valor_novo, data_alteracao)
+         VALUES (NEW.id, OLD.valor, NEW.valor, NOW());
+     END IF;
+     RETURN NEW;
+   END;
+   $$ LANGUAGE plpgsql;
 
 
 
 
--- CREATE VIEW vw_relatorio_matriculas AS
--- SELECT 
+ CREATE TRIGGER trg_auditoria_preco_curso
+ AFTER UPDATE ON cursos
+ FOR EACH ROW
+ EXECUTE PROCEDURE fn_auditar_preco_curso();
+
+ UPDATE cursos SET valor = 1950.00 WHERE id = 2;
+
+ SELECT * FROM precos;
+
+
+
+ CREATE VIEW vw_relatorio_matriculas AS
+ SELECT 
     
---     c.nome_curso
--- FROM alunos a
--- LEFT JOIN matriculas m ON a.id = m.aluno_id
--- LEFT JOIN cursos c ON m.curso_id = c.id;
+     c.nome_curso
+ FROM alunos a
+ LEFT JOIN matriculas m ON a.id = m.aluno_id
+ LEFT JOIN cursos c ON m.curso_id = c.id;
 
 -- SELECT * FROM vw_relatorio_matriculas;

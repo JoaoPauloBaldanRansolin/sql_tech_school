@@ -106,4 +106,4 @@ INSERT INTO matriculas (aluno_id, curso_id, data_matricula) VALUES
  LEFT JOIN matriculas m ON a.id = m.aluno_id
  LEFT JOIN cursos c ON m.curso_id = c.id;
 
--- SELECT * FROM vw_relatorio_matriculas;
+ SELECT * FROM vw_relatorio_matriculas;
